@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: report-vs
+  namespace: core
+spec:
+  hosts:
+    - "report.celigo.io"
+  gateways:
+    - istio-gateway/istio-in-gw
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: "report"
+        port:
+          number: 7000

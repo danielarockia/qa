@@ -1,0 +1,45 @@
+#helm install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver -n kube-system
+image:
+  repository: public.ecr.aws/ebs-csi-driver/aws-ebs-csi-driver
+  # Overrides the image tag whose default is v{{ .Chart.AppVersion }}
+  tag: ""
+  pullPolicy: IfNotPresent
+
+controller:
+  tolerations:
+  - operator: Exists
+  extraCreateMetadata: true
+  extraVolumeTags:
+    ALERTGROUP: OPS_TEAM
+    SERVICENAME: EKS
+    APPLICATIONENV: DEV
+  k8sTagClusterId: qa-aws-eks-ap-south-1
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  #serviceAccount:
+  #    create: true # A service account will be created for you if set to true. Set to false if you want to use your own.
+  #    name: ebs-csi-controller-sa # Name of the service-account to be used/created.
+  #    annotations:
+  #      eks.amazonaws.com/role-arn: arn:aws:iam::341118756977:role/DEV_EKS_EBS_CSI_DRIVER
+
+node:
+ tolerateAllTaints: true
+ resources:
+   limits:
+     cpu: 200m
+     memory: 256Mi
+   requests:
+     cpu: 100m
+     memory: 128Mi
+ extraVolumeTags:
+   ALERTGROUP: OPS_TEAM
+   SERVICENAME: EKS
+   APPLICATIONENV: DEV
+
+
+

@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: istio-in-gw
+  namespace: istio-gateway
+spec:
+  selector:
+    app: istio-ingress # istio ingress pod 
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+      - "*.celigo.io"
+      - "celigo.io"

@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: shopify-vs
+  namespace: ia
+spec:
+  hosts:
+    - "shopify-netsuite-connector.ia.celigo.io"
+  gateways:
+    - istio-gateway/istio-in-gw
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: "shopify-netsuite-connector"
+        port:
+          number: 7000

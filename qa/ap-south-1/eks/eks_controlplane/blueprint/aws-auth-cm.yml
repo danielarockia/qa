@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - rolearn: arn:aws:iam::341118756977:role/qa-aws-eks-ap-south-1_EKSWorkerRole
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+        - system:bootstrappers
+        - system:nodes
+    - rolearn: arn:aws:iam::341118756977:role/qa-aws-eks-ap-south-1_k8s-devops-assumerole_aws_full_access
+      username: '{{SessionName}}'
+      groups:
+      - k8s_devops-clusterrole
+    - rolearn: arn:aws:iam::341118756977:role/qa-aws-eks-ap-south-1_k8s-devops-assumerole_eks_full_access
+      username: '{{SessionName}}'
+      groups:
+      - k8s_devops-clusterrole
+    - rolearn: arn:aws:iam::341118756977:role/qa-aws-eks-ap-south-1_k8s-devops-assumerole_eks_readonly
+      username: '{{SessionName}}'
+      groups:
+      - k8s_dev-clusterrole
